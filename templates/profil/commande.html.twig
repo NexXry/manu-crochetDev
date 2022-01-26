@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <body class="bg-orange">
+
+    <section class="h-96 w-full bg-gray-400 bg-no-repeat" style=" background-blend-mode: multiply;
+  background-position: center center;
+  background-image: url('https://i.pinimg.com/736x/e6/cf/59/e6cf59eaaa07fb81d473fdeefebdee26.jpg'); background-size: cover;">
+        <div class="pt-44 lg:pt-96 flex flex-wrap flex-col justify-around">
+        </div>
+    </section>
+
+    <section class="container w-10/12 mx-auto rounded-t-lg -mt-14 bg-orange1 h-14">
+    </section>
+
+    <section class="container w-10/12 mx-auto bg-white rounded-b-lg mb-10 pt-5 pb-5">
+        <div class="border-2 rounded-lg border-black w-10/12 mb-5 mx-auto flex flex-col pb-10">
+            <h1 class="mx-auto mt-2 text-lg mb-5">Détail commande :</h1>
+
+            {% if commande is not empty  %}
+                {% set prixTT = 0 %}
+                {% set qttTT = 0 %}
+                {% for prod in commande %}
+                    <hr>
+                    <div class="my-2 flex flex-col lg:flex-row justify-around ml-5 mb-5">
+                        <img class="object-cover w-48 h-48" src='{{ get_env('DOMAIN') }}/images/{{ prod.prd.images|first }}' alt="">
+                    <div class="flex flex-col justify-around mb-5">
+                        <p>{{ prod.prd.nomPrd }}</p>
+                        <p>Prix HT : {{ prod.prd.prix*prod.qtt }} € <span class="italic text-gray-400">({{ prod.prd.prix }} € à l'unité)</span></p>
+                        <p>Quantité : {{ prod.qtt }}</p>
+                    </div>
+                    </div>
+                    {% if prod.dem == true %}
+                        <p class="ml-5 text-sm text-blueC3 font-bold">Votre commande peut m'être entre 1 à 4 semaines (temps de fabrication + expédition) pour vous êtes livré.</p>
+                    {% else %}
+                        <p class="ml-5 text-sm text-blueC3 font-bold">Votre commande vous sera livrée sous 2 à 7 jours ouvrable.</p>
+                    {% endif %}
+                    <hr>
+
+                    {% set prixTT = prixTT+(prod.prd.prix*prod.qtt)  %}
+                    {% set qttTT = qttTT+prod.qtt %}
+                {% endfor %}
+                <p class="mt-5 ml-5 text-lg font-bold">Total prix HT : {{ prixTT}}€ </p>
+                <p class="ml-5 text-lg font-bold">Total quantité : {{ qttTT }}</p>
+                {% else %}
+                <h1>Erreur lors du chargement des produits .</h1>
+            {% endif %}
+        </div>
+    </section>
+    </body>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Panier{% endblock %}
+
+{% block body %}
+    <body class="bg-orange">
+    <section class="h-96 w-full bg-gray-400 bg-no-repeat" style=" background-blend-mode: multiply;
+  background-position: center center;
+  background-image: url('https://i.pinimg.com/736x/e6/cf/59/e6cf59eaaa07fb81d473fdeefebdee26.jpg'); background-size: cover;">
+        <div class="pt-44 lg:pt-96 flex flex-wrap flex-col justify-around">
+        </div>
+    </section>
+
+    <section class="container w-10/12 mx-auto rounded-t-lg -mt-14 bg-orange1 h-14">
+    </section>
+
+    <section class="container w-10/12 mx-auto bg-white mb-10 rounded-b-lg pt-5">
+        <h1 class="text-2xl text-center mb-3">Erreur lors du paiement veuillez vérifier le solde de votre carte ou de votre compte paypal puis
+        réessayer .</h1>
+        {% include './components/footer.html.twig' %}
+    </section>
+    </body>
+{% endblock %}
+
+

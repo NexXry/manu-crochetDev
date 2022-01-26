@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administation{% endblock %}
+
+{% block body %}
+
+    <div class="flex" style="font-family: Arial;" x-data="{ open: true }">
+        {% include './components/sidebar.html.twig' %}
+        <div class="w-full z-10">
+            {% include './components/navbarBack.html.twig' %}
+
+            <div class="body">
+                <div class="p-8 h-screen overflow-auto" style="background-color: #E4E5E6;">
+                    <div class="main bg-white border-2 border-gray-300 rounded">
+                        <div class="rounded-t border-b-2 border-gray-300" style="background-color: #F0F3F5;">
+                            <h1 class="p-4">Liste des produits achetés. </h1>
+                        </div>
+
+                        <div class="p-4">
+                            <div class="w-10/12 flex flex-wrap justify-around mx-auto">
+
+                                <div class="overflow-auto mt-2 border-2 border-vert3 w-10/12 h-2/3">
+                                    {% if client is not empty %}
+                                        {% for prod in client.ListeProds %}
+                                            <hr>
+                                            <div class="my-2 flex flex-col justify-around ml-5">
+                                                <img class="object-cover w-48 h-48 mt-2 mb-4 rounded" src='{{ get_env('DOMAIN') }}/images/{{ prod.Produit.images|first }}' alt="">
+                                                <p class="mt-2"><span class="font-bold">ID</span> : {{ prod.id }}</p>
+                                                <p class="mt-2"><span class="font-bold"> {{ prod.Produit.nomPrd }}</span></p>
+                                                <p class="mt-2"><span class="font-bold">Prix HT :</span> {{ prod.Produit.prix }} </p>
+                                                <p class="mt-2"><span class="font-bold">Qtt : </span> {{ prod.Qtt }} </p>
+                                                <p class="mt-2"><span class="font-bold">Type de commande : </span> {{ prod.demande ? "à fabriqué" : "en stock" }} </p>
+                                            </div>
+                                            <hr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <p class="text-lg text-red-500 mt-2 text-center">Pas de commande client pour le moment !</p>
+                                    {% endif %}
+                                </div>
+                                <div class="w-10/12 mx-auto">
+                                    {{ form_start(formC) }}
+                                    <div class="flex flex-col">
+                                        <label for="name" class="hidden">Votre Nom</label>
+                                        {{ form_widget(formC.codeLivraison,{ 'attr': {'class': 'w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500
+                                        focus:outline-none',
+                                            "placeholder" : "Numéro de suivi"} }) }}
+
+                                    </div>
+                                    <button type="submit" class="mt-2 text-center border-2 border-vert3 text-vert3 rounded px-1 py-2 hover:bg-vert3 hover:text-white">ajouter numéro
+                                        de suivi</button>
+                                    {{ form_end(formC) }}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

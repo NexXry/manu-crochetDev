@@ -1,0 +1,241 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administation{% endblock %}
+
+{% block body %}
+
+    <div class="flex" style="font-family: Arial;" x-data="{ open: true }">
+        {% include './components/sidebar.html.twig' %}
+        <div class="w-full z-10">
+            {% include './components/navbarBack.html.twig' %}
+
+            <div class="body">
+                <div class="p-8 h-screen overflow-auto" style="background-color: #E4E5E6;">
+                    <div class="main bg-white border-2 border-gray-300 rounded">
+                        <div class="rounded-t border-b-2 border-gray-300" style="background-color: #F0F3F5;">
+                            <h1 class="p-4">Formulaire d'ajout de catégorie</h1>
+                        </div>
+                        <div class="p-4">
+                            <p class="mb-4">Formulaire de création de catégorie, toutes catégories sera utilisés pour classer un produit.</p>
+                            <hr>
+                            <div class="w-6/12 flex flex-wrap justify-around mx-auto">
+
+                                <div class="overflow-auto mt-2 border-2 border-vert3 w-10/12 h-64">
+                                    {% if lesCateg is not empty %}
+                                        {% for categs in lesCateg %}
+                                            <div class="flex flex-col">
+                                                <div class="flex flex-row justify-between">
+                                                    <p class="my-2 mx-2">{{ categs.nomCateg }}</p>
+                                                    <a class="my-2 mx-2" href="{{ path("backoffice_delCateg", {id: categs.id }) }}"><i class="far fa-trash-alt fa-2x hover:text-red-500"></i></a>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                        {% else %}
+                                        <p class="text-lg text-red-500 mt-2 text-center">Pas de catégorie ajoutée pour le moment !</p>
+                                    {% endif %}
+                                </div>
+
+                               <div class="w-10/12">
+                                   {{ form_start(formC) }}
+                                   <div class="flex flex-col">
+                                       <label for="name" class="hidden">Votre Nom</label>
+                                       {{ form_widget(formC.nomCateg,{ 'attr': {'class': 'w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500
+                                    focus:outline-none',
+                                           "placeholder" : "nom de la catégorie"} }) }}
+
+                                   </div>
+
+                                   {{ form_widget(formC.creer,{ 'attr': {'class': 'w-full border-2 border-vert3 hover:text-white hover:bg-vert3 text-vert3 font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300',
+                                       "placeholder" :
+                                       "créer"} }) }}
+                                   {{ form_end(formC) }}
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2 main bg-white border-2 border-gray-300 rounded">
+                        <div class="rounded-t border-b-2 border-gray-300" style="background-color: #F0F3F5;">
+                            <h1 class="p-4">Formulaire d'ajout de produit</h1>
+                        </div>
+                        <div class="p-4">
+                            <p class="mb-4">Formulaire de création de produit, tous produits utiliseras une catégorie se qui sous-entend qu'il est impossible de créer un produit sans catégorie associé.</p>
+                            <hr>
+                            <div class="w-6/12 flex flex-wrap justify-around mx-auto">
+
+                                <div>
+                                    <input id="money" class="w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none" type="text"
+                                            placeholder="Avoir un prix Jolie avec taxe">
+                                    <select class="w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none" id="livre">
+                                        <option data-id="1" value="0">non compris <span class="italic text-gray-400"></span></option>
+                                        <option data-id="2" value="1.66">0.1 kg <span class="italic text-gray-400">1.66€</span></option>
+                                        <option data-id="3" value="2.82">0.250 kg <span class="italic text-gray-400">2.82€</span></option>
+                                        <option data-id="4" value="4.95">0.5 kg <span class="italic text-gray-400">4.95€</span></option>
+                                        <option data-id="5" value="6.55">0.750 kg <span class="italic text-gray-400">6.55€</span></option>
+                                        <option data-id="6" value="7.45">1 kg <span class="italic text-gray-400">7.45€</span></option>
+                                        <option data-id="7" value="8.10">2 kg <span class="italic text-gray-400">8.10€</span></option>
+                                    </select>
+                                    <h1 id="pon" class="text-2xl text-center text-vert2"></h1>
+                                </div>
+
+
+
+                                <div class="overflow-auto mt-2 border-2 border-vert3 w-10/12 h-64">
+                                    {% if lesProds is not empty %}
+                                        {% for prod in lesProds %}
+                                            {% if prod.archiver != 1  %}
+                                            <div class="flex flex-col">
+                                                <div class="flex flex-row justify-between">
+                                                    <p class="my-2 mx-2">{{ prod.nomPrd }}</p>
+                                                    <a class="my-2 mx-2" href="{{ path("backoffice_delProd", {id: prod.id }) }}"><i class="far fa-trash-alt fa-2x hover:text-red-500"></i></a>
+                                                    <a class="my-2 mx-2 px-2 py-1 bg-yellow-500 rounded text-center text-white" href="{{ path("backoffice_Archiver", {id: prod.id }) }}">Archiver</a>
+                                                    {% for message in app.flashes('err') %}
+                                                        <div class="text-lg text-red-500">
+                                                            {{ message }}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <p class="text-lg text-red-500 mt-2 text-center">Pas de produit ajoutée pour le moment !</p>
+                                    {% endif %}
+                                </div>
+                                <div class="w-10/12 mx-auto">
+                                    {{ form_start(form) }}
+                                    <div class="flex flex-col">
+                                        <label for="name" class="hidden">Votre Nom</label>
+                                        {{ form_widget(form.nomPrd,{ 'attr': {'class': 'w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none',
+                                            "placeholder" : "nom du produit"} }) }}
+
+                                    </div>
+
+                                    <div class="flex flex-col mt-2">
+                                        <label for="prenom" class="hidden">prenom</label>
+                                        {{ form_widget(form.sousTitre,{ 'attr': {'class': 'w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none',
+                                            "placeholder" : "sous titre"} }) }}
+                                    </div>
+
+                                    <div class="flex flex-col mt-2">
+                                        <label for="email" class=""></label>
+                                        {{ form_widget(form.description,{ 'attr': {'class': 'w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none',
+                                            "placeholder" : "description"} }) }}
+                                    </div>
+
+                                    <div class="flex flex-col mt-2">
+                                        <label for="message" class="hidden">message</label>
+                                        {{ form_widget(form.prix,{ 'attr': {'class': 'w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none',
+                                            "placeholder" : "prix"} }) }}
+                                    </div>
+
+
+                                    <div class="flex flex-col mt-2">
+                                        <label for="message" class="hidden">message</label>
+                                        {{ form_widget(form.poids,{ 'attr': {'class': 'w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500
+                                        focus:outline-none',
+                                            "placeholder" : "poids du produit en kg"} }) }}
+                                    </div>
+
+                                    <div class="flex flex-col mt-2">
+                                        <label for="message" class="hidden">message</label>
+                                        {{ form_widget(form.qtt,{ 'attr': {'class': 'w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500
+                                focus:outline-none', "placeholder" : "quantité"} }) }}
+                                    </div>
+
+                                    <div class="flex flex-col mt-2">
+                                        <label for="message" class="hidden">message</label>
+                                        {{ form_widget(form.category,{ 'attr': {'class': 'w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none',
+                                            "placeholder" : "catégorie"} }) }}
+                                    </div>
+
+                                    <div class="flex flex-col mt-2">
+                                        <label for="message" class="hidden">message</label>
+                                        {{ form_widget(form.images,{ 'attr': {'class': 'w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500
+                                        focus:outline-none'} }) }}
+                                    </div>
+
+                                    {{ form_widget(form.creer,{ 'attr': {'class': 'w-full border-2 border-vert3 hover:text-white hover:bg-vert3 text-vert3 font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300',
+                                        "placeholder" :
+                                        "créer"} }) }}
+                                    {{ form_end(form) }}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="mt-2 main bg-white border-2 border-gray-300 rounded">
+                        <div class="rounded-t border-b-2 border-gray-300" style="background-color: #F0F3F5;">
+                            <h1 class="p-4">Formulaire d'ajout d'image produit</h1>
+                        </div>
+                        <div class="p-4">
+                            <p class="mb-4">Formulaire de ajout d'image produit, tous produits peut possèder une ou plusieurs images.</p>
+                            <hr>
+                            <div class="w-6/12 flex flex-wrap justify-around mx-auto">
+
+                                <div class="overflow-auto mt-2 border-2 border-vert3 w-10/12 h-64">
+                                    {% if images is not empty %}
+                                        {% for img in images %}
+                                            {% if img.Produit.archiver != 1  %}
+                                            <div class="flex flex-col">
+                                                <div class="flex flex-row justify-between">
+                                                    <p class="my-2 mx-2">Image ID : {{ img.id }}</p>
+                                                    <p class="my-2 mx-2">Liés : {{ img.Produit.nomPrd }}</p>
+                                                    <a class="my-2 mx-2" href="{{ path("backoffice_delImg", {id: img.id }) }}"><i class="far fa-trash-alt fa-2x hover:text-red-500"></i></a>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <p class="text-lg text-red-500 mt-2 text-center">Pas de produit ajoutée pour le moment !</p>
+                                    {% endif %}
+                                </div>
+                                <div class="w-10/12 mx-auto">
+                                    {{ form_start(formI) }}
+
+                                    <div class="flex flex-col mt-2">
+                                        <label for="message" class="hidden">message</label>
+                                        {{ form_widget(formI.Produit,{ 'attr': {'class': 'w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500
+                                        focus:outline-none',
+                                            "placeholder" : "catégorie"} }) }}
+                                    </div>
+
+                                    <div class="flex flex-col mt-2">
+                                        <label for="message" class="hidden">message</label>
+                                        {{ form_widget(formI.images,{ 'attr': {'class': 'w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500
+                                        focus:outline-none',
+                                            "placeholder" : "catégorie"} }) }}
+                                    </div>
+
+                                    {{ form_widget(formI.ajoutez,{ 'attr': {'class': 'w-full border-2 border-vert3 hover:text-white hover:bg-vert3 text-vert3 font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300',
+                                        "placeholder" :
+                                        "add"} }) }}
+                                    {{ form_end(formI) }}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var liv=0;
+
+        $('#livre').change(function(){
+            console.log($(this).find(':selected').data('id'))
+            console.log($(this).find(':selected').val())
+            liv=parseFloat($(this).find(':selected').val())
+        });
+
+        $( "#money" )
+            .keyup(function() {
+                var value = parseFloat($( this ).val());
+                var cal = parseFloat((value+$( this ).val()*0.014)+0.25+value*0.22)+liv
+                $( "#pon" ).text( parseFloat(cal) );
+            })
+            .keyup();
+
+    </script>
+{% endblock %}

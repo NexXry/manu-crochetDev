@@ -1,0 +1,238 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Panier{% endblock %}
+
+{% block body %}
+    <body class="bg-orange">
+    <section class="h-96 w-full bg-gray-400 bg-no-repeat" style=" background-blend-mode: multiply;
+  background-position: center center;
+  background-image: url('https://i.pinimg.com/736x/e6/cf/59/e6cf59eaaa07fb81d473fdeefebdee26.jpg'); background-size: cover;">
+        <div class="pt-44 lg:pt-96 flex flex-wrap flex-col justify-around">
+        </div>
+    </section>
+
+    <section class="container w-10/12 mx-auto rounded-t-lg -mt-14 bg-orange1 h-14">
+    </section>
+
+    <section class="container w-10/12 mx-auto bg-white mb-10 rounded-b-lg pt-5">
+        <h1 class="text-2xl text-center mb-3">Votre panier</h1>
+        <div class="w-10/12 mx-auto">
+            <div class="bg-white shadow-md rounded my-6">
+                <table class="text-left w-full border-collapse">
+                    <thead>
+                    <tr>
+                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Image produit</th>
+                        <th class="hidden lg:invisible md:invisible py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Nom produit</th>
+                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Prix hors livraison</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% set fee = 0 %}
+                    {% if panier is not empty %}
+                        {% set poidsTT = 0 %}
+                        {% set PrixTTC = 0 %}
+                        {% set dem = false %}
+                        {% for key,prod in panier %}
+                    <tr class="hover:bg-grey-lighter">
+                        {# Affichage produit #}
+                        <td class="py-4 px-6 flex flex-wrap lg:flex-row md:flex-row justify-between border-b border-grey-light">
+                            <img class="object-cover w-24 h-20 rounded" src="{{ get_env("DOMAIN") }}/images/{{ prod.prd.images|first }}" alt="">
+                            <p class="mt-5">nom: {{ prod.prd.nomPrd }}</p>
+
+                                <p class="mt-5">quantité : {{ prod.qtt }}</p>
+
+                            <a href="{{ path("delToPanier",{id: key}) }}"><i class="fas fa-trash fa-2x ml-5 lg:ml-0 md:ml-0 mt-5 text-red-500 hover:text-red-400"></i></a>
+                        </td>
+                        <td class="py-4 px-6 border-b border-grey-light">
+                            <p>{{ prod.prixhtTT}} € <span class="italic text-gray-400">({{ prod.prd.prix }}€ X {{ prod.qtt }})</span></p>
+                            {% if prod.prd.poids != 0 %}
+                            <p class="mt-2">{{ prod.prd.poids*prod.qtt }} kg</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                            {% set dem = prod.dem %}
+                            {% set poidsTT = poidsTT+prod.prd.poids*prod.qtt %}
+                            {% set PrixTTC = PrixTTC+prod.prixhtTT %}
+                        {% endfor %}
+                    {% else %}
+                    <h1 class="text-lg text-center my-2">Le panier est vide, remplissez le !</h1>
+                    {% endif %}
+                    <tr class="hover:bg-grey-lighter">
+                        <td class="py-4 px-6 border-b font-bold border-grey-light">
+                            Frais de livraison
+                        </td>
+                        {% if poidsTT is not defined %}
+                            <td class="py-4 px-6 border-b border-grey-light">
+                                <h1>pas de frais .</h1>
+                            </td>
+                        {% elseif poidsTT ==0  %}
+                            <td class="py-4 px-6 border-b border-grey-light">
+                                <p>Frais inclue</p>
+                            </td>
+                        {% elseif poidsTT >= 0.02 and poidsTT <=0.1 %}
+                            {% set PrixTTC = PrixTTC+1.66 %}
+                            {% set fee = 1.66 %}
+                            <td class="py-4 px-6 border-b border-grey-light">
+                                <p>1.66 €</p>
+                                <p>{{ poidsTT }} kg</p>
+                            </td>
+                            {% elseif poidsTT >= 0.100  and poidsTT <=0.250 %}
+                                {% set PrixTTC = PrixTTC+2.82 %}
+                                {% set fee = 2.82 %}
+                                <td class="py-4 px-6 border-b border-grey-light">
+                                    <p>2.82 €</p>
+                                                                    <p>{{ poidsTT }} kg</p>
+
+                                </td>
+                            {% elseif poidsTT >= 0.250  and poidsTT <=0.5 %}
+                                {% set PrixTTC = PrixTTC+4.95 %}
+                                {% set fee = 4.95 %}
+                                <td class="py-4 px-6 border-b border-grey-light">
+                                    <p>4.95 €</p>
+                                                                    <p>{{ poidsTT }} kg</p>
+
+                                </td>
+                        {% elseif poidsTT >= 0.500  and poidsTT <=0.750 %}
+                            {% set PrixTTC = PrixTTC+6.55 %}
+                            {% set fee = 6.55 %}
+                            <td class="py-4 px-6 border-b border-grey-light">
+                                <p>6.55 €</p>
+                                                                <p>{{ poidsTT }} kg</p>
+
+                            </td>
+                        {% elseif poidsTT >= 0.750  and poidsTT <=1 %}
+                            {% set PrixTTC = PrixTTC+7.45 %}
+                            {% set fee = 7.45 %}
+                            <td class="py-4 px-6 border-b border-grey-light">
+                                <p>7,45  €</p>
+                                                                <p>{{ poidsTT }} kg</p>
+
+                            </td>
+                        {% elseif poidsTT >= 1  and poidsTT <=2 %}
+                            {% set PrixTTC = PrixTTC+8.10 %}
+                            {% set fee = 8.10 %}
+                            <td class="py-4 px-6 border-b border-grey-light">
+                                <p>8,10 €</p>
+                                                                <p>{{ poidsTT }} kg</p>
+
+                            </td>
+                        {% elseif poidsTT >= 2  and poidsTT <=5 %}
+                            {% set PrixTTC = PrixTTC+9.35 %}
+                            {% set fee = 9.35 %}
+                            <td class="py-4 px-6 border-b border-grey-light">
+                                <p>9,35 €</p>
+                                                                <p>{{ poidsTT }} kg</p>
+
+                            </td>
+                        {% elseif poidsTT >= 5  and poidsTT <=10 %}
+                            {% set PrixTTC = PrixTTC+14.35 %}
+                            {% set fee = 14.35 %}
+                            <td class="py-4 px-6 border-b border-grey-light">
+                                <p>14,35 €</p>
+                                                                <p>{{ poidsTT }} kg</p>
+
+                            </td>
+                        {% elseif poidsTT >= 10  and poidsTT <=15%}
+                            {% set PrixTTC = PrixTTC+20.85 %}
+                            {% set fee = 20.85 %}
+                            <td class="py-4 px-6 border-b border-grey-light">
+                                <p>20,85 €</p>
+                                                                <p>{{ poidsTT }} kg</p>
+
+                            </td>
+                        {% elseif poidsTT >= 15  and poidsTT <=30 %}
+                            {% set PrixTTC = PrixTTC+26.40 %}
+                            {% set fee = 26.40 %}
+                            <td class="py-4 px-6 border-b border-grey-light">
+                                <p>26,40 €</p>
+                                                                <p>{{ poidsTT }} kg</p>
+
+                            </td>
+                        {% elseif poidsTT >= 30 %}
+                            {% set PrixTTC = PrixTTC+32.70 %}
+                            {% set fee = 32.70 %}
+                            <td class="py-4 px-6 border-b border-grey-light">
+                                <p>32,70 €</p>
+                                                                <p>{{ poidsTT }} kg</p>
+
+                            </td>
+                        {% endif %}
+                    </tr>
+
+                    <tr class="hover:bg-grey-lighter">
+                        <td class="py-4 px-6 border-b font-bold border-grey-light">
+                            Prix TTC
+                        </td>
+                        <td class="py-4 px-6 border-b border-grey-light">
+                            {% if poidsTT is defined %}
+                            <p>{{ PrixTTC }} €</p>
+                            {% else %}
+                                <h1>Pas de produit !</h1>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% if poidsTT is defined %}
+                    <tr class="hover:bg-grey-lighter">
+                        <td class="py-4 px-6 border-b border-grey-light">
+                            <h1 class="text-xl mb-2">Moyen de paiement :</h1>
+                            {% if dem == 1 %}
+                                {% if countDem < 15 and sumQtt <= 15-countDem %}
+                                    <button class="hover:bg-blueC3 border-2 border-blueC3 text-2xl text-blueC3 hover:text-white rounded px-2 w-full lg:w-2/4 lg:px-2 py-1" type="submit" id="checkout-button">Stripe CB</button>
+                                    {% else %}
+                                    <p>les commandes sont complètes !</p>
+                                {% endif %}
+                                {% else %}
+                                    <button class="hover:bg-blueC3 border-2 border-blueC3 text-2xl text-blueC3 hover:text-white rounded px-2 w-full lg:w-2/4 lg:px-2 py-1" type="submit" id="checkout-button">Stripe CB</button>
+                            {% endif %}
+                        </td>
+                        <td class="py-4 px-6 border-b border-grey-light">
+
+                        </td>
+                    </tr>
+                    {% endif %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% include './components/footer.html.twig' %}
+    </section>
+
+    {% if app.user %}
+        <script src="https://js.stripe.com/v3/"></script>
+        <script type="text/javascript">
+            // Create an instance of the Stripe object with your publishable API key
+            var stripe = Stripe("{{ get_env("STRIPE_FRONT") }}");
+            var checkoutButton = document.getElementById('checkout-button');
+
+            checkoutButton.addEventListener('click', function() {
+                // Create a new Checkout Session using the server-side endpoint you
+                // created in step 3.
+                fetch('{{ path('achat',{fee: fee}) }}', {
+                    method: 'POST',
+                })
+                    .then(function(response) {
+                        return response.json();
+                    })
+                    .then(function(session) {
+                        return stripe.redirectToCheckout({ sessionId: session.id });
+                    })
+                    .then(function(result) {
+                        // If `redirectToCheckout` fails due to a browser or network
+                        // error, you should display the localized error message to your
+                        // customer using `error.message`.
+                        if (result.error) {
+                            alert(result.error.message);
+                        }
+                    })
+                    .catch(function(error) {
+                        console.error('Error:', error);
+                    });
+            });
+        </script>
+    {% endif %}
+    </body>
+{% endblock %}
+
+

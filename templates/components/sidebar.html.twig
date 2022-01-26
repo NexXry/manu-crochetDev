@@ -1,0 +1,56 @@
+{% set current_path = app.request.get('_route') %}
+
+<div class="sidebar h-screen" style="width: 260px;" x-show="open">
+    <div>
+        <div class="text-white bg-vert3 h-14 mx-auto block px-4 py-5">
+            Panel d'administation
+        </div>
+        <div class="h-screen bg-vert3">
+            <div class="" style="font-size: 14px;">
+                {# ROUTE TO BACKOFFICE #}
+                <a href="{{ path("backoffice") }}"
+                   class="h-12 px-4 py-3 tracking-wider block
+                   {% if current_path == "backoffice" %}
+                   bg-white
+                   text-vert3
+                   {% else %}
+                   bg-vert3
+                   text-white
+                   {% endif %}
+                   font-medium border-b-2 border-vert3 hover:text-vert3 hover:bg-white">Tableau de bord</a>
+                {# ROUTE TO BACKOFFICE GESTION PRODUIT #}
+                <a href="{{ path("backoffice_prd") }}"
+                   class="h-12 px-4 py-3
+                    {% if current_path == "backoffice_prd" %}
+                   bg-white
+                   text-vert3
+                   {% else %}
+
+                   bg-vert3
+                   text-white
+                   {% endif %}
+                    tracking-wider block font-thin border-b-2 border-vert3 hover:text-vert3 hover:bg-white">Gestion produit</a>
+                <a href="{{ path("backoffice_article") }}"
+                   class="h-12 px-4 py-3
+                   {% if current_path == "backoffice_article" %}
+                   bg-white
+                   text-vert3
+                   {% else %}
+                   bg-vert3
+                   text-white
+                   {% endif %}
+                   tracking-wider block font-thin border-b-2 border-vert3 hover:text-vert3 hover:bg-white">Articles</a>
+
+                <a href="{{ path("backoffice_devis") }}"
+                   class="h-12 px-4 py-3
+                   {% if current_path == "backoffice_devis" %}
+                   bg-white
+                   text-vert3
+                   {% else %}
+                   bg-vert3
+                   text-white
+                   {% endif %}
+                   tracking-wider block font-thin border-b-2 border-vert3 hover:text-vert3 hover:bg-white">Devis Client</a>  </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,222 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <style>
+    </style>
+    <body class="bg-orange">
+    <section class="h-screen" style="background-repeat: no-repeat; background-size: cover;background-position: center center;
+       background-image: url('https://i.pinimg.com/736x/e6/cf/59/e6cf59eaaa07fb81d473fdeefebdee26.jpg');">
+        <div class="pt-44 lg:pt-96 flex flex-wrap flex-col justify-around">
+        </div>
+    </section>
+
+    <section class="container w-10/12 mx-auto rounded-t-lg -mt-14 bg-orange1 h-14">
+    </section>
+
+    <section id="propos" class="container w-10/12 mx-auto bg-white rounded-b-lg mb-10 h-screen">
+        <div class="py-12 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div id="service"  class="lg:text-center">
+                    <h2 class="text-base text-orange2 font-semibold tracking-wide uppercase">Qui suis-je ?</h2>
+                    <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                        Je m'appelle Marie.
+                    </p>
+                    <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+                        Je suis passionné par le crochet et je fabrique des objets au crochet que je mets en vente sur ce site.
+                        Vous pouvez également faire des demandes personnaliser qui seront étudiez avant confirmation.                    </p>
+                </div>
+               <div class="mt-10">
+                    <dl class="spacy-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+                        <div class="relative">
+                            <dt>
+                                <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-orange1">
+                                    <!-- Heroicon name: outline/globe-alt -->
+                                    <i class="fas fa-cash-register"></i>
+                                </div>
+                                <p class="ml-16 text-lg leading-6 font-medium text-gray-900">Mes créations</p>
+                            </dt>
+                            <dd class="mt-2 ml-16 text-base text-gray-500 mb-4 lg:mb-1">
+                                Sur mon site, vous retrouverez mes <strong>créations</strong> (animaux, fleurs, peluche le tout au crochet et 100 % fait à la main), ces créations seront mise en vente pour qui en voudra bien.
+                                Pour les intéressés faits vite, le nombre et limité !
+                            </dd>
+                        </div>
+                        <a href="{{ path('boutique') }}" class="block lg:hidden md:hidden border-2 border-vert3 hover:bg-vert3 text-vert3 px-2 py-1 text-center text-2xl rounded hover:text-white">Voir les créations </a>
+
+                        <div class="relative mt-10">
+                            <dt>
+                                <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-orange1">
+                                    <!-- Heroicon name: outline/scale --><i class="fas fa-shopping-basket"></i>
+                                </div>
+                                <p class="ml-16 text-lg leading-6 font-medium text-gray-900">Commande personnalisable</p>
+                            </dt>
+                            <dd class="mt-2 ml-16 text-base text-gray-500 mb-4 lg:mb-1">
+                                Je vous propose également des <strong>commandes</strong>, pour cela, il suffit de vous inscrire sur le site.
+                            </dd>
+                        </div>
+                        <a href="{{ path("app_profil") }}" class="block lg:hidden md:hidden mt-2 border-2 border-vert3 hover:bg-vert3 text-vert3 px-2 py-1 rounded text-center text-2xl hover:text-vert3">Passez commande </a>
+
+                            <a href="{{ path('boutique') }}" class="hidden lg:block md:block border-2 border-vert3 hover:bg-vert3 text-vert3 px-2 py-1 text-center text-2xl rounded hover:text-white">Voir les créations  </a>
+                            <a href="{{ path("app_profil") }}" class="hidden lg:block md:block border-2 border-vert3 hover:bg-vert3 text-vert3 px-2 py-1 rounded text-center text-2xl hover:text-white">Passez commande </a>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <div class="container w-10/12 mx-auto rounded-t-lg mt-14 bg-orange1 h-14">
+            <h1 class="text-2xl font-semibold text-center pt-3">Les dernières créations :</h1>
+        </div>
+
+        <div class="bg-white py-20">
+            <div class="w-10/12 mx-auto border-2 border-orange1 -mt-20">
+                <div class="max-w-5xl m-8 px-6 mx-auto text-center">
+
+                    {% if produits is not empty %}
+                        <div class="flex flex-wrap justify-around my-10">
+                        {% for prod in produits %}
+
+                                <div class="border-2 mt-2 border-vert4 p-5 rounded-lg">
+                                    <img class="object-cover w-48 h-48 rounded" src='{{ get_env("DOMAIN") }}/images/{{ prod.images|first }}' alt="">
+                                    <p class="text-lg text-center my-2">{{ prod.nomPrd }}</p>
+                                    <a class="py-1 px-2 rounded-lg border-2 border-vert3 text-vert3 hover:bg-vert3 hover:text-white "
+                                       href="{{ path('prod',{id:prod.id,qtt: 1}) }}">
+                                        Détail de la création
+                                    </a>
+                                </div>
+
+                        {% endfor %}
+                        </div>
+                    {% else %}
+                        <h1 class="text-lg text-center">Pas de création pour le moment.</h1>
+                    {% endif %}
+
+                    <div class="flex items-center justify-center mt-12">
+
+                        <a href="{{ path('boutique') }}" class="flex items-center text-gray-600 hover:underline hover:text-gray-500">
+                            <span>Voir plus</span>
+
+                            <svg class="h-5 animate-bounce w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-orange1 pattern py-20">
+
+            <div class="w-10/12 mx-auto border-2 border-orange1 -mt-20">
+                <div class="max-w-5xl m-4 px-6 mx-auto text-center">
+
+                    <h2 class="text-2xl font-semibold">Les Actualités de la boutique :</h2>
+
+                    {% if articles is not empty %}
+                        <div class="flex items-center justify-center mt-12">
+                            {% for article in articles %}
+
+                                <div class="border-2 mt-2 border-vert4 p-5 rounded-lg">
+                                    <img class="object-cover w-48 h-48 rounded" src='{{ get_env("DOMAIN") }}/images/{{ article.image }}' alt="">
+                                    <p class="text-lg text-center my-2">{{ article.titreArt }}</p>
+                                    <a class="py-1 px-2 rounded-lg border-2 border-vert3 text-vert3 hover:bg-vert3 hover:text-white "
+                                       href="{{ path('article',{id:article.id}) }}">
+                                        Détail de l'article
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    {% else %}
+                        <h1 class="text-lg text-center mx-2">Pas d'article pour le moment.</h1>
+                    {% endif %}
+
+                    <div class="flex items-center justify-center mt-10">
+                        <a href="{{ path('articles') }}" class="flex items-center hover:underline mx-auto" href="#">
+                            <strong><span>Voir touts les articles</span></strong>
+
+                            <svg class="h-5 animate-bounce w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="contact" class="">
+            <div class="relative flex items-top justify-center min-h-screen bg-white dark:bg-gray-900 sm:items-center sm:pt-0">
+                <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+                    <div class="mt-8 overflow-hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-2">
+                            <div class="p-6 mr-2 bg-gray-100 dark:bg-gray-800 sm:rounded-lg">
+                                <h2 class="text-4xl sm:text-5xl text-gray-800 dark:text-white font-extrabold tracking-tight">
+                                    Mes informations
+                                </h2>
+                                <p class="text-normal text-lg sm:text-2xl font-medium text-gray-600 dark:text-gray-400 mt-2">
+                                    Contactez-moi pour en savoir plus sur vos idées de créations personnalisées !
+                                </p>
+
+                                <div  class="flex items-center mt-8 text-gray-600 dark:text-gray-400">
+                                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    </svg>
+                                    <div class="ml-4 text-md tracking-wide font-semibold w-40">
+                                        31800 Saint gaudens
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center mt-2 text-gray-600 dark:text-gray-400">
+                                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                    </svg>
+                                    <div class="ml-4 text-md tracking-wide font-semibold w-40">
+                                        nicolas.castex.pro@gmail.com
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div  class="p-6 flex flex-col justify-center">
+                                 {{ form_start(form) }}
+                                <div class="flex flex-col">
+                                    <label for="name" class="hidden">Votre Nom</label>
+                                    {{ form_widget(form.nom,{ 'attr': {'class': 'w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none', "placeholder" : "nom"} }) }}
+
+                                </div>
+
+                                <div class="flex flex-col mt-2">
+                                    <label for="prenom" class="hidden">prenom</label>
+                                    {{ form_widget(form.prenom,{ 'attr': {'class': 'w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none', "placeholder" : "prénom"} }) }}
+                                </div>
+
+                                <div class="flex flex-col mt-2">
+                                    <label for="email" class="hidden">Votre Mail</label>
+                                    {{ form_widget(form.mail,{ 'attr': {'class': 'w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none', "placeholder" : "mail"} }) }}
+                                </div>
+
+                                <div class="flex flex-col mt-2">
+                                    <label for="message" class="hidden">message</label>
+                                    {{ form_widget(form.message,{ 'attr': {'class': 'w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none', "placeholder" : "message"} }) }}
+                                </div>
+
+                                 {{ form_widget(form.envoyer,{ 'attr': {'class': 'md:w-32 bg-vert2 hover:bg-vert3 text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300', "placeholder" : "Envoyer"} }) }}
+                                 {{ form_end(form) }}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer" class="-mt-10 pb-10">
+            {% include './components/footer.html.twig' %}
+        </div>
+    </section>
+
+
+
+    </body>
+
+
+{% endblock %}

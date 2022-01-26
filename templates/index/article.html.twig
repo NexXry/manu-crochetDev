@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <style>
+    </style>
+    <body class="bg-orange">
+    <section class="h-96" style="background-repeat: no-repeat; background-size: cover;background-position: center center;
+       background-image: url('https://i.pinimg.com/736x/e6/cf/59/e6cf59eaaa07fb81d473fdeefebdee26.jpg');">
+        <div class="pt-44 lg:pt-96 flex flex-wrap flex-col justify-around">
+        </div>
+    </section>
+
+    <section class="container w-10/12 mx-auto rounded-t-lg -mt-14 bg-orange1 h-14">
+    </section>
+
+    <section id="propos" class="container w-10/12 mx-auto bg-white rounded-b-lg pb-10 mb-10">
+        <div class="flex flex-wrap justify-center">
+            <img class="mx-auto w-64 h-64 lg:w-2/4 rounded-lg lg:h-2/4 pt-5" src='{{ get_env("DOMAIN") }}/images/{{ article.image }}' alt="">
+            <div class="flex flex-col mx-auto lg:ml-5 pt-5 w-full">
+                <h1 class="text-lg lg:text-2xl mx-auto">{{ article.titreArt }}</h1>
+                <p class="text-lg mt-10 break-words w-10/12 lg:w-2/4 mx-auto">{{ article.descriptionArt }}</p>
+            </div>
+        </div>
+    </section>
+
+
+
+    </body>
+
+
+{% endblock %}

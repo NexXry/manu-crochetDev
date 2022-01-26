@@ -1,0 +1,273 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Boutique{% endblock %}
+
+{% block body %}
+
+    <style xmlns:x-on="http://www.w3.org/1999/xhtml" xmlns:x-on="http://www.w3.org/1999/xhtml" xmlns:x-on="http://www.w3.org/1999/xhtml">
+        #myImg {
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #myImg:hover {opacity: 0.7;}
+
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+        }
+
+        /* Modal Content (Image) */
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        /* Caption of Modal Image (Image Text) - Same Width as the Image */
+        #caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+        }
+
+        /* Add Animation - Zoom in the Modal */
+        .modal-content, #caption {
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        @keyframes zoom {
+            from {transform:scale(0)}
+            to {transform:scale(1)}
+        }
+
+        /* The Close Button */
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* 100% Image Width on Smaller Screens */
+        @media only screen and (max-width: 700px){
+            .modal-content {
+                width: 100%;
+            }
+        }
+    </style>
+
+    <body class="bg-orange">
+    <section class="h-96 w-full bg-gray-400 bg-no-repeat" style=" background-blend-mode: multiply;
+  background-position: center center;
+  background-image: url('https://i.pinimg.com/736x/e6/cf/59/e6cf59eaaa07fb81d473fdeefebdee26.jpg'); background-size: cover;">
+        <div class="pt-44 lg:pt-96 flex flex-wrap flex-col justify-around">
+        </div>
+    </section>
+
+    <section class="container w-10/12 mx-auto rounded-t-lg -mt-14 bg-orange1 h-14">
+    </section>
+
+    <section class="container w-10/12 mx-auto bg-white mb-10 rounded-b-lg pt-5">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+                        <div class="flex flex-col md:flex-row -mx-4">
+                            <div class="md:flex-1 px-4">
+                                {% set i = 1 %}
+                                {% set TAB = [] %}
+                                <div x-data="{ image: {{ i }} }" x-cloak>
+                                    <div class="h-64 w-64 lg:h-96 lg:w-96 mx-auto rounded-lg bg-gray-100 mb-4">
+                                        {% for image in prod.images %}
+
+                                        <div x-show="image === {{ i }}" class="h-64 w-64 lg:h-96 lg:w-96 rounded-lg bg-gray-100 mb-4 flex items-center justify-center">
+                                            <img id="myImg{{ i }}" src='{{ get_env('DOMAIN') }}/images/{{ image.nom }}' class="cursor-pointer object-cover h-64 w-64 lg:h-96 lg:w-96 rounded-lg" alt="{{ image.nom }}">
+                                        </div>
+
+                                            <div id="myModal" class="modal">
+
+                                                <!-- The Close Button -->
+                                                <span class="close">&times;</span>
+
+                                                <!-- Modal Content (The Image) -->
+                                                <img class="modal-content" id="img01">
+
+                                                <!-- Modal Caption (Image Text) -->
+                                                <div id="caption"></div>
+                                            </div>
+                                            {% set IB = [i] %}
+                                            {% set TAB = TAB+{(loop.index0): i} %}
+                                            {% set i = i+1 %}
+                                        {% endfor %}
+                                    </div>
+                                    <div class="flex -mx-2 mb-4">
+                                        <template x-for="i in {{ prod.images|length }}">
+                                            <div class="flex-1 px-2">
+                                                <button x-on:click="image = i" :class="{ 'ring-2 ring-yellow-300 ring-inset': image === i }" class="focus:outline-none w-full rounded-lg h-24 md:h-32 bg-gray-100 flex items-center justify-center">
+                                                    <span x-text="i" class="text-2xl"></span>
+                                                </button>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="md:flex-1 px-4">
+                                <h2 class="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-2xl md:text-3xl">{{ prod.NomPrd }}</h2>
+                                <p class="text-gray-500 text-sm">Par <a href="#" class="text-yellow-500 hover:underline">Manu-crochet</a></p>
+
+                                <div class="flex items-center space-x-4 my-4">
+                                    <div>
+                                        <div class="rounded-lg bg-gray-100 flex py-2 px-3">
+                                            <span class="font-bold text-yellow-500 text-3xl">{{ prod.prix }}</span>
+                                            <span class="text-yellow-400 mr-1 mt-1">€</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1">
+                                        {% if prod.poids > 0 %}
+                                            <p class="text-gray-400 text-sm">Frais de livraison : (Calculé selon le poids du produit) .</p>
+                                            <p class="text-gray-400 text-sm">Poids : {{ prod.poids}} kg</p>
+                                            {% else %}
+                                                <p class="text-gray-400 text-sm">Frais de livraison inclue !</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% if prod.qtt == 0 %}
+                                    <p class="text-blueC3 italic text-sm mb-4">Sur demande : quand vous achetez une commande et je la fabrique en conséquence. <br>
+
+                                        Attention, ces commandes sont limitées à <strong>15</strong> et se renouvellent toutes les 3 semaines. <br> <br>
+                                        La durée de réception de votre commande varie entre 1 à 4 semaines (3 semaines + durée d'acheminement du colis), selon la complexité du produit.
+                                    </p>
+                                {% endif %}
+                                <p class="text-gray-500 mb-5">{{ prod.Description }}</p>
+                                {% if prod.qtt != 0 %}
+                                <p class="text-gray-500">nombre de produit en stock : <strong>{{ prod.qtt }}</strong></p>
+                                <div class="flex py-4 space-x-4">
+                                    <div class="relative">
+                                        <div class="text-center left-0 pt-2 right-0 absolute block text-xs uppercase text-gray-400 tracking-wide font-semibold">Qty</div>
+                                        <select id="qtt" class="cursor-pointer appearance-none rounded-xl border border-gray-200 pl-4 pr-8 h-14 flex items-end pb-1">
+                                            <option>Vous avez choisi : {{ qtt }}</option>
+                                            <option data-id="1">1</option>
+                                            <option data-id="2">2</option>
+                                            <option data-id="3">3</option>
+                                            <option data-id="4">4</option>
+                                            <option data-id="5">5</option>
+                                        </select>
+                                        <svg class="w-5 h-5 text-gray-400 absolute right-0 bottom-0 mb-2 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                                        </svg>
+                                    </div>
+                                    {% endif %}
+
+                                    {% for message in app.flashes('err') %}
+                                        <div class="text-lg text-red-500">
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
+
+                                    {% if prod.qtt > 0 %}
+                                        <a id="clicked" href="{{ path('prodToPanier', {id: prod.id, qtt: qtt,dem : 0 } ) }}" class="px-2 py-1  text-center  font-semibold rounded-xl bg-yellow-500 hover:bg-yellow-400 text-white">
+                                            Ajouter au panier
+                                        </a>
+                                        {% else %}
+                                            {% if demCount < 15 %}
+                                                <a id="clicked" href="{{ path('prodToPanier', {id: prod.id, qtt: 1,dem : true } ) }}" class=" px-3 py-2 text-center  font-semibold rounded-xl bg-yellow-500 hover:bg-yellow-400 text-white">
+                                                    Ajouter au panier
+                                                </a>
+                                                {% else %}
+                                                    <p class="text-blueC3 text-md mb-4">Les commandes sur demande sont complètes !</p>
+                                            {% endif %}
+
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        {% include './components/footer.html.twig' %}
+    </section>
+
+
+    <script>
+        var modal = document.getElementById("myModal");
+        var arr = {{ TAB|json_encode }}
+
+        // Get the image and insert it inside the modal - use its "alt" text as a caption
+        for (let i = 0; i < arr.length ; i++) {
+            console.log(arr[i])
+            var img = document.getElementById("myImg"+arr[i]);
+            var modalImg = document.getElementById("img01");
+            var captionText = document.getElementById("caption");
+            img.onclick = function(){
+                modal.style.display = "block";
+                modalImg.src = this.src;
+                captionText.innerHTML = this.alt;
+            }
+        }
+
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+    </script>
+
+    <script>
+        var qtt = 1;
+        var PRDqtt = {{ prod.qtt }};
+
+
+        $('#qtt').change(function(){
+            qtt = $(this).children('option:selected').data('id');
+            if(qtt ==1){
+                window.location = '{{ get_env("DOMAIN") }}{{ path('prod', {id: prod.id, qtt: 1}) }}'
+            }
+            else if(qtt ==2){
+                window.location = '{{ get_env("DOMAIN") }}{{ path('prod', {id: prod.id, qtt: 2}) }}'
+            }else if(qtt ==3){
+                window.location = '{{ get_env("DOMAIN") }}{{ path('prod', {id: prod.id, qtt: 3}) }}'
+            }
+            else if(qtt ==4){
+                window.location = '{{ get_env("DOMAIN") }}{{ path('prod', {id: prod.id, qtt: 4}) }}'
+            }
+            else if(qtt ==5){
+                window.location = '{{ get_env("DOMAIN") }}{{ path('prod', {id: prod.id, qtt: 5}) }}'
+            }
+
+            if (qtt > PRDqtt){
+                window.location = '{{ get_env("DOMAIN") }}{{ path('prod', {id: prod.id, qtt:  prod.qtt }) }}'
+            }
+        });
+        </script>
+
+    </body>
+{% endblock %}

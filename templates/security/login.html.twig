@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<body class="bg-white font-family-karla h-screen">
+
+    <div class="w-full flex flex-wrap">
+
+        <!-- Login Section -->
+        <div class="w-full md:w-1/2 flex flex-col">
+
+            <div class="flex justify-center md:justify-start pt-12 md:pl-12 md:-mb-24">
+                <a href="{{ path("index") }}" class="bg-vert3 text-white font-bold text-xl p-4">Manu-Crochet</a>
+            </div>
+
+            <div class="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-0 px-8 md:px-24 lg:px-32">
+                <p class="text-center text-3xl">Bienvenue.</p>
+                <form class="flex flex-col pt-3 md:pt-8" method="post">
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+
+                    {% if app.user %}
+                        <div class="mb-3">
+                            Tu es déjà connecter :  {{ app.user.username }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
+                        </div>
+                    {% endif %}
+                    <div class="flex flex-col pt-4">
+                        <label for="email" class="text-lg">Mail</label>
+                        <input type="email" name="email" value="{{ last_username }}"  id="inputEmail" placeholder="exemple@email.com" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" autocomplete="email" required autofocus>
+                    </div>
+
+                    <div class="flex flex-col pt-4">
+                        <label for="password" class="text-lg">Mot de passe</label>
+                        <input type="password" name="password" id="inputPassword" placeholder="********" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" autocomplete="current-password" required>
+                    </div>
+
+                    <input type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}"
+                    >
+
+                    <input type="submit" value="Connexion" class="border-2 hover:bg-vert3 transition ease-in duration-200 bg-white border-vert3 text-vert3 hover:text-white text-lg rounded cursor-pointer p-2 mt-8">
+                </form>
+                <div class="text-center pt-12 pb-12">
+                    <p>Pas encore de compte ? <a href="{{ path("app_register") }}" class="underline font-semibold">Inscris-toi !</a></p>
+                    <p>Tu as perdu ton mot de passe ? <a href="{{ path("app_perdu") }}" class="underline font-semibold">Récupère-le !</a></p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Image Section -->
+        <div class="w-1/2 shadow-2xl">
+            <img class="object-cover w-full h-screen hidden md:block" src="https://images.unsplash.com/photo-1619233985563-fcba75ff25a5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80">
+        </div>
+    </div>
+
+</body>
+
+{% endblock %}

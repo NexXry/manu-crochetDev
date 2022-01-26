@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+        <title>{% block title %}Manu-crochet{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+              integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+              crossorigin="anonymous" />
+
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        <script type="module" src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
+        <script nomodule src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine-ie11.min.js" defer></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+
+    <!-- component -->
+    <nav class="bg-rouge1 py-6 md:py-4 lg:py-4">
+        <div class="flex items-center justify-between md:container mx-auto px-6 md:px-0">
+            <div>
+                <svg  class="h-14 top-3 right-4 absolute lg:hidden md:hidden"
+                      xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+
+                    <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+                        <path d="M2330 5113 c-157 -26 -305 -135 -377 -277 -81 -160 -75 -351 15 -505 42 -72 216 -246 275 -275 140 -70 314 13 346 165 18 84 3 133 -78 253 -38 56 -39 61 -25 87 12 25 17 27 41 18 16 -6 163 -63 327 -127 l300 -117 16 -65 c9 -36 26 -87 38 -114 12 -27 22 -50 22 -52 0 -2 -73 -4 -162 -4 -183 0 -215 -9 -277 -71 -60 -60 -74 -106 -81 -274 -5 -126 -9 -156 -27 -190 -28 -52 -67 -89 -123 -114 -43 -20 -64 -21 -461 -21 -240 0 -439 -4 -470 -10 -158 -30 -283 -141 -331 -293 -14 -46 -18 -92 -18 -216 l0 -157 -107 -17 c-156 -23 -272 -59 -408 -127 -500 -248 -801 -788 -745 -1335 42 -413 260 -775 600 -999 299 -197 657 -266 1012 -195 125 25 217 58 348 125 362 185 619 524 707 934 28 131 25 400 -6 539 -124 561 -563 974 -1123 1059 l-108 16 0 156 c0 148 1 159 26 208 26 52 77 101 130 124 21 9 152 14 489 18 510 7 498 5 603 77 66 45 125 118 153 191 18 45 23 87 28 202 4 85 12 154 19 167 7 12 29 27 50 33 38 10 282 14 282 5 0 -3 -9 -23 -20 -44 -10 -21 -30 -76 -42 -122 -20 -73 -23 -108 -23 -259 0 -152 3 -185 23 -253 25 -86 61 -164 100 -216 16 -22 22 -38 16 -46 -101 -134 -144 -283 -144 -495 0 -212 43 -361 144 -495 6 -8 0 -24 -16 -46 -81 -108 -119 -236 -125 -429 -8 -218 26 -367 113 -498 l35 -53 -31 -45 c-80 -116 -120 -268 -120 -461 0 -171 36 -326 103 -436 l23 -38 67 51 67 51 -25 47 c-87 166 -89 476 -5 644 67 132 145 130 209 -5 45 -97 56 -158 56 -312 0 -153 -14 -228 -62 -323 -14 -28 -24 -53 -22 -55 2 -2 32 -25 66 -50 l62 -47 21 31 c31 42 74 160 91 244 8 41 14 130 14 215 -1 118 -5 160 -23 228 -24 89 -59 166 -98 219 -28 37 -30 56 -8 74 9 7 31 44 51 82 121 242 107 636 -31 841 -41 62 -43 66 -26 81 25 23 75 119 98 191 46 141 53 363 17 524 -19 83 -82 225 -113 253 -19 18 -19 19 24 83 156 232 150 695 -12 911 -29 39 -30 54 -4 78 11 10 22 26 25 36 4 11 12 19 20 19 7 0 304 -113 660 -250 356 -138 652 -249 658 -247 5 1 22 35 38 75 l27 72 -31 13 c-18 7 -317 123 -665 257 -481 187 -631 248 -627 259 3 8 8 41 12 73 4 36 10 58 18 58 7 0 260 -97 561 -216 302 -119 577 -226 610 -239 l62 -23 30 76 c21 54 26 79 18 83 -6 4 -294 118 -641 254 -346 135 -636 254 -642 263 -7 9 -13 30 -13 47 0 18 -9 67 -20 109 -96 378 -395 459 -557 152 l-38 -73 -300 119 c-165 65 -327 125 -360 133 -57 14 -140 17 -195 8z m491 -297 l326 -128 -5 -77 c-2 -42 -6 -78 -8 -80 -2 -2 -129 44 -281 103 -153 59 -304 117 -335 129 -89 32 -102 24 -170 -108 -32 -60 -57 -120 -58 -132 0 -12 25 -58 55 -103 30 -44 62 -94 70 -111 28 -53 -5 -109 -64 -109 -32 0 -46 10 -133 99 -139 140 -174 228 -148 367 23 121 121 231 239 269 27 9 74 14 116 12 63 -3 103 -16 396 -131z m693 113 c14 -11 37 -39 50 -62 23 -40 70 -176 63 -183 -4 -4 -258 96 -270 106 -14 12 32 97 69 130 41 36 53 37 88 9z m-24 -376 c80 -31 147 -58 149 -59 6 -5 -9 -129 -18 -142 -5 -9 -46 2 -159 45 l-151 58 -3 35 c-2 19 -1 57 1 83 2 40 6 47 20 42 9 -3 81 -31 161 -62z m-13 -343 c76 -29 82 -33 72 -51 -14 -28 -67 -58 -90 -52 -23 7 -63 52 -89 104 -25 48 -25 50 3 40 12 -5 59 -23 104 -41z m56 -312 c63 -68 96 -176 104 -343 9 -192 -37 -367 -114 -435 -39 -35 -45 -36 -82 -14 -51 30 -99 127 -122 248 -17 89 -12 272 10 358 49 192 129 265 204 186z m-8 -1005 c34 -34 67 -100 92 -178 14 -47 18 -93 18 -215 0 -165 -11 -223 -60 -320 -67 -132 -139 -131 -205 3 -41 83 -61 189 -61 317 0 128 20 234 61 317 50 102 103 128 155 76z m-2120 -398 c41 -104 81 -247 100 -360 25 -142 30 -387 11 -535 -15 -116 -50 -279 -65 -307 -4 -8 -27 -3 -80 17 -40 16 -75 30 -77 32 -2 2 3 28 11 58 41 155 49 225 49 425 1 291 -30 429 -160 732 -7 15 26 21 111 19 l69 -1 31 -80z m306 36 l46 -13 26 -91 c69 -243 98 -522 79 -758 -12 -138 -35 -282 -62 -391 l-12 -48 -77 7 c-42 3 -80 9 -85 14 -5 4 0 44 12 91 43 169 56 275 56 473 1 255 -28 439 -103 659 -17 50 -31 91 -31 92 0 2 72 -15 151 -35z m-660 -68 c91 -199 139 -420 139 -636 0 -122 -17 -270 -41 -360 -11 -43 -13 -43 -100 27 l-56 44 13 74 c18 101 17 326 -1 434 -21 117 -58 238 -105 341 l-39 84 37 16 c49 21 105 41 114 42 4 1 22 -29 39 -66z m983 -90 c124 -89 132 -100 145 -188 22 -146 31 -363 20 -518 -11 -169 -42 -366 -59 -377 -16 -10 -162 -42 -167 -36 -3 2 4 49 15 103 60 291 63 602 11 882 -11 58 -22 121 -26 139 -3 17 -2 32 1 32 4 0 31 -17 60 -37z m-1290 -53 c83 -184 111 -335 107 -565 l-1 -60 -41 60 c-100 148 -174 345 -193 510 l-6 50 47 32 c27 18 51 33 54 33 4 0 18 -27 33 -60z m-274 -204 c0 -32 67 -221 106 -298 92 -184 240 -361 402 -483 423 -317 1018 -356 1462 -95 47 27 89 50 93 50 9 0 4 -35 -20 -146 l-15 -72 -80 -37 c-119 -54 -249 -94 -383 -117 -102 -17 -147 -19 -300 -15 -254 8 -415 48 -631 157 -350 177 -614 476 -748 845 -28 78 -30 71 47 183 49 72 66 79 67 28z m1977 -251 c37 -87 77 -231 86 -310 l5 -50 -56 -41 c-76 -54 -132 -87 -138 -81 -3 2 2 60 11 127 10 74 16 196 16 313 l0 191 21 -35 c11 -19 36 -70 55 -114z m1074 18 c42 -36 83 -128 105 -234 20 -98 15 -289 -10 -379 -34 -121 -108 -219 -154 -203 -87 30 -153 209 -153 413 0 201 41 336 122 405 38 32 50 31 90 -2z m-3240 -225 c226 -457 662 -789 1174 -898 129 -27 397 -38 528 -21 113 15 248 46 341 77 38 13 71 22 73 21 5 -6 -76 -127 -118 -178 l-39 -47 -118 -23 c-101 -20 -147 -24 -337 -24 -188 0 -236 4 -330 23 -466 93 -847 323 -1132 684 -100 127 -138 193 -135 242 4 67 37 226 47 226 3 0 23 -37 46 -82z m199 -791 c160 -135 432 -292 628 -361 224 -79 407 -110 663 -111 l206 0 -40 -24 c-70 -42 -198 -91 -302 -117 -467 -115 -975 82 -1248 485 -60 89 -128 230 -156 326 l-21 70 103 -106 c56 -59 131 -132 167 -162z"/>
+                    </g>
+                </svg>
+                <svg  class="h-14 ml-8 hidden lg:block md:block"
+                      xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+
+                    <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+                        <path d="M2330 5113 c-157 -26 -305 -135 -377 -277 -81 -160 -75 -351 15 -505 42 -72 216 -246 275 -275 140 -70 314 13 346 165 18 84 3 133 -78 253 -38 56 -39 61 -25 87 12 25 17 27 41 18 16 -6 163 -63 327 -127 l300 -117 16 -65 c9 -36 26 -87 38 -114 12 -27 22 -50 22 -52 0 -2 -73 -4 -162 -4 -183 0 -215 -9 -277 -71 -60 -60 -74 -106 -81 -274 -5 -126 -9 -156 -27 -190 -28 -52 -67 -89 -123 -114 -43 -20 -64 -21 -461 -21 -240 0 -439 -4 -470 -10 -158 -30 -283 -141 -331 -293 -14 -46 -18 -92 -18 -216 l0 -157 -107 -17 c-156 -23 -272 -59 -408 -127 -500 -248 -801 -788 -745 -1335 42 -413 260 -775 600 -999 299 -197 657 -266 1012 -195 125 25 217 58 348 125 362 185 619 524 707 934 28 131 25 400 -6 539 -124 561 -563 974 -1123 1059 l-108 16 0 156 c0 148 1 159 26 208 26 52 77 101 130 124 21 9 152 14 489 18 510 7 498 5 603 77 66 45 125 118 153 191 18 45 23 87 28 202 4 85 12 154 19 167 7 12 29 27 50 33 38 10 282 14 282 5 0 -3 -9 -23 -20 -44 -10 -21 -30 -76 -42 -122 -20 -73 -23 -108 -23 -259 0 -152 3 -185 23 -253 25 -86 61 -164 100 -216 16 -22 22 -38 16 -46 -101 -134 -144 -283 -144 -495 0 -212 43 -361 144 -495 6 -8 0 -24 -16 -46 -81 -108 -119 -236 -125 -429 -8 -218 26 -367 113 -498 l35 -53 -31 -45 c-80 -116 -120 -268 -120 -461 0 -171 36 -326 103 -436 l23 -38 67 51 67 51 -25 47 c-87 166 -89 476 -5 644 67 132 145 130 209 -5 45 -97 56 -158 56 -312 0 -153 -14 -228 -62 -323 -14 -28 -24 -53 -22 -55 2 -2 32 -25 66 -50 l62 -47 21 31 c31 42 74 160 91 244 8 41 14 130 14 215 -1 118 -5 160 -23 228 -24 89 -59 166 -98 219 -28 37 -30 56 -8 74 9 7 31 44 51 82 121 242 107 636 -31 841 -41 62 -43 66 -26 81 25 23 75 119 98 191 46 141 53 363 17 524 -19 83 -82 225 -113 253 -19 18 -19 19 24 83 156 232 150 695 -12 911 -29 39 -30 54 -4 78 11 10 22 26 25 36 4 11 12 19 20 19 7 0 304 -113 660 -250 356 -138 652 -249 658 -247 5 1 22 35 38 75 l27 72 -31 13 c-18 7 -317 123 -665 257 -481 187 -631 248 -627 259 3 8 8 41 12 73 4 36 10 58 18 58 7 0 260 -97 561 -216 302 -119 577 -226 610 -239 l62 -23 30 76 c21 54 26 79 18 83 -6 4 -294 118 -641 254 -346 135 -636 254 -642 263 -7 9 -13 30 -13 47 0 18 -9 67 -20 109 -96 378 -395 459 -557 152 l-38 -73 -300 119 c-165 65 -327 125 -360 133 -57 14 -140 17 -195 8z m491 -297 l326 -128 -5 -77 c-2 -42 -6 -78 -8 -80 -2 -2 -129 44 -281 103 -153 59 -304 117 -335 129 -89 32 -102 24 -170 -108 -32 -60 -57 -120 -58 -132 0 -12 25 -58 55 -103 30 -44 62 -94 70 -111 28 -53 -5 -109 -64 -109 -32 0 -46 10 -133 99 -139 140 -174 228 -148 367 23 121 121 231 239 269 27 9 74 14 116 12 63 -3 103 -16 396 -131z m693 113 c14 -11 37 -39 50 -62 23 -40 70 -176 63 -183 -4 -4 -258 96 -270 106 -14 12 32 97 69 130 41 36 53 37 88 9z m-24 -376 c80 -31 147 -58 149 -59 6 -5 -9 -129 -18 -142 -5 -9 -46 2 -159 45 l-151 58 -3 35 c-2 19 -1 57 1 83 2 40 6 47 20 42 9 -3 81 -31 161 -62z m-13 -343 c76 -29 82 -33 72 -51 -14 -28 -67 -58 -90 -52 -23 7 -63 52 -89 104 -25 48 -25 50 3 40 12 -5 59 -23 104 -41z m56 -312 c63 -68 96 -176 104 -343 9 -192 -37 -367 -114 -435 -39 -35 -45 -36 -82 -14 -51 30 -99 127 -122 248 -17 89 -12 272 10 358 49 192 129 265 204 186z m-8 -1005 c34 -34 67 -100 92 -178 14 -47 18 -93 18 -215 0 -165 -11 -223 -60 -320 -67 -132 -139 -131 -205 3 -41 83 -61 189 -61 317 0 128 20 234 61 317 50 102 103 128 155 76z m-2120 -398 c41 -104 81 -247 100 -360 25 -142 30 -387 11 -535 -15 -116 -50 -279 -65 -307 -4 -8 -27 -3 -80 17 -40 16 -75 30 -77 32 -2 2 3 28 11 58 41 155 49 225 49 425 1 291 -30 429 -160 732 -7 15 26 21 111 19 l69 -1 31 -80z m306 36 l46 -13 26 -91 c69 -243 98 -522 79 -758 -12 -138 -35 -282 -62 -391 l-12 -48 -77 7 c-42 3 -80 9 -85 14 -5 4 0 44 12 91 43 169 56 275 56 473 1 255 -28 439 -103 659 -17 50 -31 91 -31 92 0 2 72 -15 151 -35z m-660 -68 c91 -199 139 -420 139 -636 0 -122 -17 -270 -41 -360 -11 -43 -13 -43 -100 27 l-56 44 13 74 c18 101 17 326 -1 434 -21 117 -58 238 -105 341 l-39 84 37 16 c49 21 105 41 114 42 4 1 22 -29 39 -66z m983 -90 c124 -89 132 -100 145 -188 22 -146 31 -363 20 -518 -11 -169 -42 -366 -59 -377 -16 -10 -162 -42 -167 -36 -3 2 4 49 15 103 60 291 63 602 11 882 -11 58 -22 121 -26 139 -3 17 -2 32 1 32 4 0 31 -17 60 -37z m-1290 -53 c83 -184 111 -335 107 -565 l-1 -60 -41 60 c-100 148 -174 345 -193 510 l-6 50 47 32 c27 18 51 33 54 33 4 0 18 -27 33 -60z m-274 -204 c0 -32 67 -221 106 -298 92 -184 240 -361 402 -483 423 -317 1018 -356 1462 -95 47 27 89 50 93 50 9 0 4 -35 -20 -146 l-15 -72 -80 -37 c-119 -54 -249 -94 -383 -117 -102 -17 -147 -19 -300 -15 -254 8 -415 48 -631 157 -350 177 -614 476 -748 845 -28 78 -30 71 47 183 49 72 66 79 67 28z m1977 -251 c37 -87 77 -231 86 -310 l5 -50 -56 -41 c-76 -54 -132 -87 -138 -81 -3 2 2 60 11 127 10 74 16 196 16 313 l0 191 21 -35 c11 -19 36 -70 55 -114z m1074 18 c42 -36 83 -128 105 -234 20 -98 15 -289 -10 -379 -34 -121 -108 -219 -154 -203 -87 30 -153 209 -153 413 0 201 41 336 122 405 38 32 50 31 90 -2z m-3240 -225 c226 -457 662 -789 1174 -898 129 -27 397 -38 528 -21 113 15 248 46 341 77 38 13 71 22 73 21 5 -6 -76 -127 -118 -178 l-39 -47 -118 -23 c-101 -20 -147 -24 -337 -24 -188 0 -236 4 -330 23 -466 93 -847 323 -1132 684 -100 127 -138 193 -135 242 4 67 37 226 47 226 3 0 23 -37 46 -82z m199 -791 c160 -135 432 -292 628 -361 224 -79 407 -110 663 -111 l206 0 -40 -24 c-70 -42 -198 -91 -302 -117 -467 -115 -975 82 -1248 485 -60 89 -128 230 -156 326 l-21 70 103 -106 c56 -59 131 -132 167 -162z"/>
+                    </g>
+                </svg>
+            </div>
+            <img class="h-8 lg:hidden md:hidden absolute left-6 top-6" id="burger"
+                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/2048px-Hamburger_icon.svg.png" alt="">
+            <div class="space-x-8 xl:space-x-12 sm:flex items-center justify-between hidden md:px-0">
+                <a href="{{ path("index") }}" class="text-lg py-1 px-2 hover:bg-orange4 hover:text-white rounded text-gray-900 font-semibold cursor-pointer">ACCUEIL</a>
+                <a href="{{ path("boutique") }}" class="text-lg py-1 px-2 hover:bg-orange4 hover:text-white rounded text-gray-900 font-semibold cursor-pointer">BOUTIQUE</a>
+            </div>
+
+            <div class="flex mr-8">
+                <div class="flex items-center">
+                    {#  app.user.isVerified == true  #}
+                    {% if is_granted('ROLE_CLIENT') and app.user is not empty %}
+                        <a href="{{ path("app_profil") }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="invisible lg:visible md:visible h-8 w-8 text-gray-900 hover:bg-orange4 hover:text-white rounded  cursor-pointer" fill="none"
+                                 viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </a>
+                        <a href="{{ path("panier") }}" class="relative ml-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="invisible lg:visible md:visible h-8 w-8 text-gray-900 hover:bg-orange4 hover:text-white rounded cursor-pointer" fill="none"
+                                 viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                            </svg>
+                            </span>
+                        </a>
+                        <a class="invisible lg:visible md:visible text-gray-900 hover:bg-orange4 hover:text-white rounded cursor-pointer pl-2" href="{{ path("app_logout") }}">
+                            <i class="fas fa-sign-out-alt fa-2x"></i>
+                        </a>
+                        {%  else %}
+                            {% if is_granted('ROLE_CHEF') and app.user is not empty%}
+                                <a class="invisible lg:visible md:visible text-gray-900 hover:bg-orange4 hover:text-white rounded cursor-pointer pr-2" href="{{ path("backoffice") }}">
+                                    <i class="fas fa-users-cog fa-2x"></i> </a>
+                                <a class="invisible lg:visible md:visible text-gray-900 hover:bg-orange4 hover:text-white rounded cursor-pointer pl-2" href="{{ path("app_logout") }}">
+                                    <i class="fas fa-sign-out-alt fa-2x"></i>
+                                </a>
+                                {% else %}
+                                    <a href="{{ path('app_login') }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="invisible lg:visible md:visible h-8 w-8 text-gray-900 hover:bg-orange4 hover:text-white rounded  cursor-pointer" fill="none"
+                                             viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                        </svg>
+                                    </a>
+                            {% endif %}
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+        <!-- Mobile !-->
+        <div id="menu" class="mt-10 flex justify-around hidden">
+            <a href="{{ path("index") }}" class="text-lg py-1 px-2 hover:bg-orange4 hover:text-white rounded text-gray-900 font-semibold cursor-pointer">ACCUEIL</a>
+            <a href="{{ path("boutique") }}" class="text-lg py-1 px-2 hover:bg-orange4 hover:text-white rounded text-gray-900 font-semibold cursor-pointer">BOUTIQUE</a>
+            {% if is_granted('ROLE_CLIENT') and app.user is not empty %}
+                <a href="{{ path("app_profil") }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-900 hover:bg-orange4 hover:text-white rounded  cursor-pointer" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                </a>
+                <a href="" class="relative ml-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-900 hover:bg-orange4 hover:text-white rounded cursor-pointer" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                    </span>
+                </a>
+                <a class="text-gray-900 hover:bg-orange4 hover:text-white rounded cursor-pointer pl-2" href="{{ path("app_logout") }}">
+                    <i class="fas fa-sign-out-alt fa-2x"></i>
+                </a>
+            {%  else %}
+                {% if is_granted('ROLE_CHEF') and app.user is not empty%}
+                    <a class="text-gray-900 hover:bg-orange4 hover:text-white rounded cursor-pointer" href="{{ path("backoffice") }}">
+                        <i class="fas fa-users-cog fa-2x"></i> </a>
+                    <a class="text-gray-900 hover:bg-orange4 hover:text-white rounded cursor-pointer pl-2" href="{{ path("app_logout") }}">
+                        <i class="fas fa-sign-out-alt fa-2x"></i>
+                    </a>
+                {% else %}
+                    <a href="{{ path('app_login') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-900 hover:bg-orange4 hover:text-white rounded cursor-pointer" fill="none"
+                             viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </a>
+                {% endif %}
+
+            {% endif %}
+        </div>
+        <!-- Mobile !-->
+    </nav>
+
+        {% block body %}{% endblock %}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script>
+    var burger = $('#burger')
+    var menu = $('#menu')
+    burger.click((e)=>{
+        menu.fadeToggle().css('display', 'flex');
+    })
+
+    </script>
+    </body>
+</html>

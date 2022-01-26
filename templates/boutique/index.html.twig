@@ -1,0 +1,182 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Boutique{% endblock %}
+
+{% block body %}
+    <body class="bg-orange">
+    <section class="h-96 w-full bg-gray-400 bg-no-repeat" style=" background-blend-mode: multiply;
+  background-position: center center;
+  background-image: url('https://i.pinimg.com/736x/e6/cf/59/e6cf59eaaa07fb81d473fdeefebdee26.jpg'); background-size: cover;">
+        <div class="pt-44 lg:pt-96 flex flex-wrap flex-col justify-around">
+        </div>
+    </section>
+
+    <section class="container w-10/12 mx-auto rounded-t-lg -mt-14 bg-orange1 h-14">
+    </section>
+
+    <section class="container w-10/12 mx-auto rounded-t-2xl bg-white mb-10 rounded-b-lg pt-5">
+
+        <div class="w-10/12 bg-rouge1 py-4 rounded-2xl mx-auto mb-10">
+            <form class="flex flex-wrap justify-around" action="{{ path("boutique") }}" method="POST">
+
+                <select name="tri" class="text-xl lg:text-2xl mb-4 lg:mb-0 rounded bg-orange">
+                    <option value="">--Sélection sens du tri--</option>
+                    <option class="text-center" value="croissant">croissant</option>
+                    <option class="text-center" value="decroissant">décroissant</option>
+                </select>
+
+                <select name="categ" class="text-xl lg:text-2xl mb-4 lg:mb-0 rounded bg-orange">
+                    <option value="">--Sélection par catégorie--</option>
+                    {% if category is not empty %}
+                        {% for categ in category %}
+                            <option class="text-center" value="{{ categ.nomCateg }}">{{ categ.nomCateg }}</option>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-lg text-red-500">Pas de catégorie ajoutée pour le moment !</p>
+                    {% endif %}
+
+                </select>
+
+                <button type="submit" class="border-2 border-vert3 rounded py-1 px-2 text-center bg-white text-vert3 hover:text-white hover:bg-vert3 text-2xl">Appliquer le filtre</button>
+
+            </form>
+        </div>
+            <!-- component -->
+            {% if lesProds is not empty or lesProdsDem is not empty %}
+                <hr>
+                <h1 class="text-center text-2xl text-orange2 mb-2">Liste des produits en stock :</h1>
+                <div class="flex justify-center flex-wrap items-center">
+            {% if lesProds is not empty %}
+                {% for prod in lesProds %}
+                    {% if prod.qtt > 0  %}
+                    {% if prod.archiver != 1  %}
+                    <div class="container mx-auto max-w-sm w-full p-4 sm:w-1/2">
+                        <div class="card flex flex-col justify-center p-10 bg-white rounded-lg shadow-2xl">
+                            <div class="prod-title">
+                                <p class="text-2xl text-center uppercase text-gray-900 font-bold">{{ prod.nomPrd }} : {{ prod.prix }}€ </p>
+                                <p class="text-lg text-center text-gray-400 w-full">{{ prod.sousTitre }}
+                                </p>
+                            </div>
+
+                            {% set imgs = prod.images|first %}
+
+                            <div class="prod-img">
+                                <img src="{{ get_env("DOMAIN") }}/images/{{ imgs }}"
+                                     class="w-64 h-64 shadow-md mx-auto my-4 rounded object-cover object-center" />
+                            </div>
+                            <div class="prod-info grid gap-10">
+                                {% if prod.qtt == 0  %}
+                                    <div>
+                                        <p class="my-1 text-center text-red-500">Le produit et disponible sur demande, aller dans Plus d'info pour voir les modalités de livraison.</p>
+                                    </div>
+                                {% endif %}
+                                <div class="flex md:flex-row justify-around items-center text-gray-900">
+
+                                    {% if prod.qtt > 0 %}
+                                        <a href="{{ path('prod', {id: prod.id, qtt: 1}) }}" class="px-5 text-center mr-2 py-2 transition ease-in duration-200 uppercase rounded-full text-blueC3 hover:bg-blueC3 hover:text-white border-2 border-blueC3
+                                    focus:outline-none">
+                                            Plus d'info
+                                        </a>
+                                        <a href="{{ path('prodToPanier', {id: prod.id, qtt: 1,dem: 0} ) }}" class="px-6 py-2 text-center transition ease-in duration-200 uppercase rounded-full text-vert4 hover:bg-vert4 hover:text-white border-2
+                                        border-vert4
+                                    focus:outline-none">
+                                            Ajoutez au panier
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                    {% else %}
+                    <p  class="text-center text-md text-blueC3 my-5">Pas de produit en stock pour le moment .</p>
+                {% endfor %}
+            {% else %}
+                <p class="text-lg text-center text-blueC3">Pas de produit pour le moment !</p>
+           {% endif %}
+                </div>
+
+
+                {% set count = 15-demCount %}
+
+                <hr>
+                <h1 class="text-center text-2xl text-blueC3 my-5">Il reste <strong class="animate-pulse">{{ count }}</strong>
+                    {% if demCount < 15 %}
+                        <span class="italic text-blueC2">{{ count }} / 15 </span>
+                    {% else %}
+                            <span class="italic text-blueC2">complet</span>
+                    {% endif %}
+                     commandes sur demande dispos pour n'importe quel
+                    <strong>produit sur
+                        demande</strong>.</h1>
+                <h1 class="text-center text-2xl text-orange2 mb-2">Liste des produits sur demande :</h1>
+
+                <div class="flex justify-center flex-wrap items-center">
+
+            {% if lesProdsDem is not empty %}
+                {% for prod in lesProdsDem %}
+                    {% if prod.qtt == 0 %}
+                        {% if prod.archiver != 1  %}
+
+                            <div class="container mx-auto max-w-sm w-full p-4 sm:w-1/2">
+                                <div class="card flex flex-col justify-center p-10 bg-white rounded-lg shadow-2xl">
+                                    <div class="prod-title">
+                                        <p class="text-2xl text-center uppercase text-gray-900 font-bold">{{ prod.nomPrd }} : {{ prod.prix }}€ </p>
+                                        <p class="text-lg text-center text-gray-400 w-full">{{ prod.sousTitre }}
+                                        </p>
+                                    </div>
+
+                                    {% set imgs = prod.images|first %}
+
+                                    <div class="prod-img">
+                                        <img src="{{ get_env("DOMAIN") }}/images/{{ imgs }}"
+                                             class="w-64 h-64 shadow-md mx-auto my-4 rounded object-cover object-center" />
+                                    </div>
+                                    <div class="prod-info grid gap-10">
+                                        {% if prod.qtt == 0 and demCount < 15 %}
+                                            <div>
+                                                <p class="my-1 text-center italic text-blueC3">Sur demande, aller dans <strong>Plus d'info </strong>pour voir les modalités de livraison.</p>
+                                            </div>
+                                            <div class="flex md:flex-row justify-around items-center text-gray-900">
+
+                                                <a href="{{ path('prod', {id: prod.id, qtt: 1}) }}" class="px-5 text-center -mt-3 mr-2 py-2 transition ease-in duration-200 uppercase rounded-full text-blueC3 hover:bg-blueC3 hover:text-white
+                                            border-2
+                                                border-blueC3
+                                    focus:outline-none">
+                                                    Plus d'info
+                                                </a>
+
+                                                <a href="{{ path('prodToPanier', {id: prod.id, qtt: 1,dem: true} ) }}" class="-mt-3 px-6 py-2 text-center transition ease-in duration-200 uppercase rounded-full text-vert4 hover:bg-vert4 hover:text-white
+                                                border-2 border-vert4
+                                    focus:outline-none">
+                                                    Ajoutez au panier
+                                                </a>
+                                            </div>
+                                        {% else %}
+                                            <div>
+                                                <p class="my-1 text-center italic text-blueC3">Les commandes sur demande sont complètes !</p>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p class="text-lg text-center text-blueC3">Pas de produit sur demande pour le moment !</p>
+            {% endif %}
+                </div>
+            {% else %}
+                <p class="text-lg text-center text-blueC3">Pas de produit ajoutée pour le moment !</p>
+            {% endif %}
+
+
+
+        {% include './components/footer.html.twig' %}
+    </section>
+
+    </body>
+{% endblock %}

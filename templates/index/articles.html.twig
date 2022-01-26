@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <style>
+    </style>
+    <body class="bg-orange">
+    <section class="h-96" style="background-repeat: no-repeat; background-size: cover;background-position: center center;
+       background-image: url('https://i.pinimg.com/736x/e6/cf/59/e6cf59eaaa07fb81d473fdeefebdee26.jpg');">
+        <div class="pt-44 lg:pt-96 flex flex-wrap flex-col justify-around">
+        </div>
+    </section>
+
+    <section class="container w-10/12 mx-auto rounded-t-lg -mt-14 bg-orange1 h-14">
+    </section>
+
+    <section id="propos" class="container w-10/12 mx-auto bg-white rounded-b-lg pb-10 mb-10">
+        <h1 class="text-lg text-center pt-2">Liste de tous les articles :</h1>
+        <div class="flex flex-wrap justify-center">
+            {% for article in articles %}
+                <div class="border-2 mt-2 border-vert4 p-5 rounded-lg">
+                    <img class="w-48 h-48 rounded" src='{{ get_env('DOMAIN') }}/images/{{ article.image }}' alt="">
+                    <p class="text-lg text-center my-2">{{ article.titreArt }}</p>
+                    <a class="ml-7 py-1 px-2 rounded-lg border-2 border-vert3 text-vert3 hover:bg-vert3 hover:text-white "
+                       href="{{ path('article',{id:article.id}) }}">
+                        Détail de l'article
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+
+
+    </body>
+
+
+{% endblock %}
